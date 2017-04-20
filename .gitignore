@@ -1,0 +1,7 @@
+# Log Files
+*.log
+
+
+# Intellij
+*.iml
+.idea/
