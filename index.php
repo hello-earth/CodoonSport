@@ -8,7 +8,7 @@
 
 include_once "CodoonSport.php";
 
-$cSport = new CodoonSport("15718881312","123456789");
+$cSport = new CodoonSport("","");
 $result = $cSport -> Login();
 $result = Request::getSubString($result,"{","}");
 
