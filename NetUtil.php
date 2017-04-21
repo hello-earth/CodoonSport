@@ -2,8 +2,7 @@
 
 class Request {
 
-    var $token;
-    var $timestamp;
+
 
     function __construct($token = "Basic MDk5Y2NlMjhjMDVmNmMzOWFkNWUwNGU1MWVkNjA3MDQ6YzM5ZDNmYmVhMWU4NWJlY2VlNDFjMTk5N2FjZjBlMzY=",
                          $timestamp = "0"){
@@ -11,26 +10,8 @@ class Request {
         $this->timestamp = $timestamp;
     }
 
-
-    public function setToken($token){
-        $this->token = $token;
-    }
-
-    public function setTimestamp($timestamp){
-        $this->timestamp = $timestamp;
-    }
-
-    public function get($url){
-        $headers = array('User-Agent: CodoonSport(7.13.0 680;Android 4.2.2;samsung GT-S7562)',
-            'Accept-Encoding: deflate',"Authorization: $this->token","Timestamp: $this->timestamp",
-            "Gaea: cb71db89628d768d185950b4afe6bf76",
-            "Uranus: A1gr5gDL1TFfN4CTu0XQ2EYpzQG9jU+Qh3Qd3FW0K+2mF6WIiJR28Wev5iIuvsLe",
-            "did: 24-864895024806919","Davinci: 1","Connection: Keep-Alive"
-        );
+    public function get($url, $headers){
         $result="";
-        if("https://api.codoon.com/api/verify_credentials"==$url)
-            var_dump($headers);
-
         try{
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
