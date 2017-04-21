@@ -31,24 +31,43 @@ class CodoonSport{
         );
     }
 
-    public function setToken($token){
+    private function setToken($token){
         $this->token = "Bearer ".$token;
     }
-    public function setRefreshToken($token){
+    private function setRefreshToken($token){
         $this->refresh_token = $token;
     }
 
-    public function setUid($uid){
+    private function setUid($uid){
         $this->user_id = $uid;
     }
-    public function setTimestamp($timestamp){
+    private function setTimestamp($timestamp){
         $this->timestamp = $timestamp;
+    }
+
+    private function ParseResult($result){
+        $resultArray = json_decode($result, true);
+        if(isset($resultArray["access_token"])) {
+            $this->setToken($resultArray["access_token"]);
+        }
+        if(isset($resultArray["timestamp"])) {
+            $this->setTimestamp($resultArray["timestamp"]);
+        }
+        if(isset($resultArray["refresh_token"])) {
+            $this->setRefreshToken($resultArray["refresh_token"]);
+        }
+        if(isset($resultArray["user_id"])) {
+            $this->setUid($resultArray["user_id"]);
+        }
     }
 
     public function Login(){
         $lUrl = sprintf(LOGIN_URL,$this->username,$this->password);
         $this->AddHeaderPorperty();
         $result = $this->request->get($lUrl, $this->headers);
+        $result = Request::getSubString($result,"{","}");
+        $result = "{".$result."}";
+        $this->ParseResult($result);
         return $result;
     }
 
@@ -63,7 +82,11 @@ class CodoonSport{
 
     public function GetMyInfomation(){
         $this->AddHeaderPorperty();
-        return $this->request->get(CARIFY_URL,$this->headers);
+        $result =  $this->request->get(CARIFY_URL,$this->headers);
+        $result = Request::getSubString($result,"{","}");
+        $result = "{".$result."}";
+        $this->ParseResult($result);
+        return $result;
     }
 
 }

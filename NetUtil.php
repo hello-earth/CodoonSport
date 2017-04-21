@@ -28,11 +28,17 @@ class Request {
         return $result;
     }
 
-    public static  function getSubString($content,$first,$end){
+    public static  function getSubString($content,$first,$end,$method=1){
         $firstindex = strpos($content,$first);
         if($firstindex){
             $firstindex += strlen($first);
-            $endindex = strpos($content,$end,$firstindex);
+            $endindex = false;
+            $endindex = false;
+
+            if($method)
+                $endindex = strpos($content,$end,$firstindex);
+            else
+                $endindex = strrpos($content,$end);
             if($endindex){
                 return substr($content,$firstindex,$endindex-$firstindex);
             }

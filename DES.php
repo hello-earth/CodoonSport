@@ -21,14 +21,14 @@ class DES
 		$this->iv = $key;
         $size = mcrypt_get_block_size ( MCRYPT_DES, MCRYPT_MODE_CBC );
         $str = $this->pkcs5Pad ( $str, $size );
-        return strtolower(bin2hex( mcrypt_cbc(MCRYPT_DES, $key, $str, MCRYPT_ENCRYPT, $this->iv ) ) );
+        return strtolower(bin2hex(@mcrypt_cbc(MCRYPT_DES, $key, $str, MCRYPT_ENCRYPT, $this->iv ) ) );
     }
      
     function decrypt($str, $key = "codoon20") {
 		//解密
 		$this->iv = $key; 
         $strBin = $this->hex2bin( strtolower( $str ) );
-        $str = mcrypt_cbc( MCRYPT_DES, $key, $strBin, MCRYPT_DECRYPT, $this->iv );
+        $str = @mcrypt_cbc( MCRYPT_DES, $key, $strBin, MCRYPT_DECRYPT, $this->iv );
         $str = $this->pkcs5Unpad( $str );
         return $str;
     }
