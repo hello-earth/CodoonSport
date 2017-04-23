@@ -6,6 +6,8 @@
  * Time: 15:24
  */
 
+date_default_timezone_set('Asia/Shanghai');
+
 include_once "CodoonSport.php";
 
 $cSport = new CodoonSport("","");
@@ -18,7 +20,9 @@ if(isset($resultArray["access_token"])){
         $result = $cSport->GetMyInfomation();
         $resultArray = json_decode($result, true);
         if(strlen($resultArray["id"])==36){
-            var_dump($resultArray);
+            $result = $cSport->UploadSteps(1623);
+            $resultArray = json_decode($result, true);
+            echo $resultArray["status"];
         }
     }
 }
